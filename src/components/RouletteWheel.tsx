@@ -67,7 +67,7 @@ export default function RouletteWheel({
         }}
       />
 
-      <div className="relative h-64 w-64 sm:h-80 sm:w-80 rounded-full border-4 border-border shadow-lg overflow-hidden">
+      <div className="relative h-72 w-72 sm:h-[26rem] sm:w-[26rem] rounded-full border-4 border-border shadow-lg overflow-hidden">
         <div
           className="h-full w-full rounded-full"
           style={{

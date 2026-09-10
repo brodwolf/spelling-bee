@@ -29,12 +29,26 @@ export default function SpellingInput({
       : "border-wrong ring-2 ring-wrong/30";
 
   return (
-    <div className="flex w-full max-w-sm flex-col items-center gap-3">
+    <div className="flex w-full max-w-md flex-col items-center gap-3">
       <span className="font-[family-name:var(--font-hand)] text-2xl text-text-primary">
         Your Word is...
       </span>
       <span className="min-h-10 font-[family-name:var(--font-hand)] text-3xl tracking-wide text-accent">
-        {word ?? "—"}
+        {word
+          ? word.split("").map((letter, i) => (
+              <span
+                key={i}
+                className={
+                  i < typedAnswer.length &&
+                  letter.toLowerCase() === typedAnswer[i]?.toLowerCase()
+                    ? "text-correct"
+                    : undefined
+                }
+              >
+                {letter}
+              </span>
+            ))
+          : "—"}
       </span>
 
       <input

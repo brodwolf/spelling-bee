@@ -70,22 +70,22 @@ export default function GameBoard({ gradeLabel, initialWords }: GameBoardProps) 
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center bg-bg px-4 py-8 sm:px-8">
-      <div className="w-full max-w-6xl rounded-[2rem] border-2 border-dashed border-border bg-surface/60 px-4 py-8 sm:px-10">
-        <div className="mb-8 flex items-center justify-between">
+    <div className="relative flex min-h-screen items-center justify-center bg-bg px-4 py-8 sm:px-8">
+      <div className="w-full max-w-[92rem] rounded-[2rem] border-2 border-dashed border-border bg-surface/60 px-6 py-10 sm:px-14 sm:py-12">
+        <div className="mb-10 flex items-center justify-between">
           <Link
             href="/"
             className="text-sm text-text-muted underline-offset-2 hover:underline"
           >
             ← Trocar turma
           </Link>
-          <h1 className="font-[family-name:var(--font-hand)] text-3xl text-text-primary sm:text-4xl">
+          <h1 className="font-[family-name:var(--font-hand)] text-4xl text-text-primary sm:text-5xl">
             Spelling Bee — {gradeLabel}
           </h1>
           <span className="w-20" />
         </div>
 
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[auto_1fr_auto] lg:items-start">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[auto_1fr_auto] lg:items-start lg:justify-center">
           <div className="flex justify-center lg:justify-start">
             <ScoreBoard right={score.right} wrong={score.wrong} />
           </div>

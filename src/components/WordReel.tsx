@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SPIN_DURATION_MS, REEL_EXTRA_LAPS } from "@/config/animation";
+import { theme } from "@/config/theme";
 
 interface WordReelProps {
   words: string[];
@@ -9,6 +10,9 @@ interface WordReelProps {
   targetIndex: number;
   phase: "idle" | "spinning" | "revealing" | "answering" | "finished";
 }
+
+const SELECTED_FLEX_WEIGHT = 24;
+const HIGHLIGHT_FLEX_WEIGHT = 3;
 
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
@@ -18,7 +22,6 @@ export default function WordReel({ words, spinToken, targetIndex, phase }: WordR
   const [highlightIndex, setHighlightIndex] = useState<number | null>(null);
   const hasMounted = useRef(false);
   const frameRef = useRef<number | null>(null);
-  const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
 
   useEffect(() => {
     if (!hasMounted.current) {
@@ -54,39 +57,42 @@ export default function WordReel({ words, spinToken, targetIndex, phase }: WordR
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [spinToken]);
 
-  useEffect(() => {
-    if (highlightIndex !== null && itemRefs.current[highlightIndex]) {
-      itemRefs.current[highlightIndex]?.scrollIntoView({
-        block: "nearest",
-        behavior: "smooth",
-      });
-    }
-  }, [highlightIndex]);
-
   return (
-    <ul className="flex max-h-[28rem] w-56 flex-col gap-2 overflow-y-auto pr-1">
+    <div className="flex h-72 w-56 flex-col gap-px sm:h-[26rem] sm:w-64">
       {words.map((word, i) => {
         const isSelected =
           (phase === "revealing" || phase === "answering") && i === targetIndex;
         const isHighlighted = phase === "spinning" && i === highlightIndex;
+        const flexWeight = isSelected
+          ? SELECTED_FLEX_WEIGHT
+          : isHighlighted
+            ? HIGHLIGHT_FLEX_WEIGHT
+            : 1;
+
         return (
-          <li
+          <div
             key={`${word}-${i}`}
-            ref={(el) => {
-              itemRefs.current[i] = el;
-            }}
-            className={`rounded-xl border-2 px-4 py-2 text-center font-[family-name:var(--font-hand)] text-lg transition-colors ${
+            className={`flex items-center justify-center overflow-hidden rounded-sm text-center transition-[flex-grow] duration-150 ${
               isSelected
-                ? "border-highlight bg-wrong-soft text-highlight"
-                : isHighlighted
-                ? "border-accent bg-accent-soft text-text-on-accent"
-                : "border-border bg-surface text-text-primary"
+                ? "border-2 border-highlight px-2 py-1 font-[family-name:var(--font-hand)] text-sm sm:text-base"
+                : ""
             }`}
+            style={{
+              flexGrow: flexWeight,
+              flexBasis: 0,
+              minHeight: isSelected ? 32 : 1,
+              background: isSelected
+                ? theme.wrongSoft
+                : isHighlighted
+                  ? theme.accent
+                  : theme.wheel[i % theme.wheel.length],
+              color: isSelected ? theme.highlight : undefined,
+            }}
           >
-            {isSelected ? "Word selected" : word}
-          </li>
+            {isSelected ? <span className="break-words">{word}</span> : null}
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 }
