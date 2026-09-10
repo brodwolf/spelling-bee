@@ -3,22 +3,35 @@
 import { useEffect, useRef, useState } from "react";
 import { theme } from "@/config/theme";
 import { SPIN_DURATION_MS, SPIN_TURNS } from "@/config/animation";
+import { getWheelSegmentColors } from "@/lib/wheelColors";
 
 interface RouletteWheelProps {
-  segmentCount: number;
+  words: string[];
   spinToken: number;
   targetIndex: number;
   onSpinComplete?: () => void;
   remainingLabel?: string;
 }
 
+const TEXT_RADIUS = 40;
+
+function truncateForArc(word: string, segAngle: number, fontSize: number) {
+  const arcLength = (segAngle * Math.PI) / 180 * TEXT_RADIUS;
+  const avgCharWidth = fontSize * 0.62;
+  const maxChars = Math.max(2, Math.floor(arcLength / avgCharWidth));
+  if (word.length <= maxChars) return word;
+  if (maxChars <= 2) return word.slice(0, 1) + "…";
+  return word.slice(0, maxChars - 1) + "…";
+}
+
 export default function RouletteWheel({
-  segmentCount,
+  words,
   spinToken,
   targetIndex,
   onSpinComplete,
   remainingLabel,
 }: RouletteWheelProps) {
+  const segmentCount = words.length;
   const rotationRef = useRef(0);
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
@@ -46,14 +59,16 @@ export default function RouletteWheel({
   }, [spinToken]);
 
   const segAngle = segmentCount > 0 ? 360 / segmentCount : 360;
+  const segmentColors = getWheelSegmentColors(segmentCount, theme.wheel, true);
   const gradientStops = Array.from({ length: Math.max(segmentCount, 1) }, (_, i) => {
-    const color = theme.wheel[i % theme.wheel.length];
+    const color = segmentColors[i] ?? theme.surfaceMuted;
     const from = i * segAngle;
     const to = (i + 1) * segAngle;
     return `${color} ${from}deg ${to}deg`;
   }).join(", ");
 
   const dividers = Array.from({ length: segmentCount }, (_, i) => i * segAngle);
+  const fontSize = Math.min(4.2, Math.max(1.6, segAngle * 0.3));
 
   return (
     <div className="relative flex flex-col items-center">
@@ -104,6 +119,24 @@ export default function RouletteWheel({
                 transform={`rotate(${deg} 50 50)`}
               />
             ))}
+
+            {words.map((word, i) => {
+              const mid = i * segAngle + segAngle / 2;
+              return (
+                <text
+                  key={`${word}-${i}`}
+                  x="50"
+                  y={50 - TEXT_RADIUS}
+                  textAnchor="middle"
+                  fontSize={fontSize}
+                  fill={theme.textOnAccent}
+                  className="select-none font-[family-name:var(--font-hand)]"
+                  transform={`rotate(${mid} 50 50)`}
+                >
+                  {truncateForArc(word, segAngle, fontSize)}
+                </text>
+              );
+            })}
           </svg>
         </div>
 

@@ -92,7 +92,7 @@ export default function GameBoard({ gradeLabel, initialWords }: GameBoardProps) 
 
           <div className="flex flex-col items-center gap-8">
             <RouletteWheel
-              segmentCount={remainingWords.length}
+              words={remainingWords}
               spinToken={spinToken}
               targetIndex={selectedIndex ?? 0}
               remainingLabel={`${remainingWords.length}`}
