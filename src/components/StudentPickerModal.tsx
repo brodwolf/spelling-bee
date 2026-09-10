@@ -81,7 +81,7 @@ export default function StudentPickerModal({
             <button
               type="button"
               onClick={handleClose}
-              aria-label="Fechar"
+              aria-label="Close"
               className="absolute right-4 top-4 text-2xl leading-none text-text-muted hover:text-text-primary"
             >
               ×
@@ -90,12 +90,12 @@ export default function StudentPickerModal({
             <div className="flex flex-col items-center gap-6">
               <BeeMascot className="h-14 w-14" />
               <h2 className="font-[family-name:var(--font-hand)] text-2xl text-text-primary">
-                Sortear aluno
+                Pick a student
               </h2>
 
               {students.length === 0 ? (
                 <p className="text-center text-text-muted">
-                  Nenhum aluno disponível.
+                  No students available.
                 </p>
               ) : (
                 <>
@@ -129,7 +129,7 @@ export default function StudentPickerModal({
                       disabled={spinning}
                       className="flex-1 rounded-xl border-2 border-accent bg-accent px-4 py-2 font-[family-name:var(--font-hand)] text-lg text-text-on-accent transition-transform hover:scale-105 disabled:opacity-40 disabled:hover:scale-100"
                     >
-                      {pick ? "Sortear novamente" : "Sortear"}
+                      {pick ? "Draw again" : "Draw"}
                     </button>
                     <button
                       type="button"
@@ -137,7 +137,7 @@ export default function StudentPickerModal({
                       disabled={!pick || spinning}
                       className="flex-1 rounded-xl border-2 border-correct bg-correct-soft px-4 py-2 font-[family-name:var(--font-hand)] text-lg text-correct transition-transform hover:scale-105 disabled:opacity-40 disabled:hover:scale-100"
                     >
-                      Confirmar
+                      Confirm
                     </button>
                   </div>
                 </>

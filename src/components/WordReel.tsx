@@ -13,10 +13,13 @@ interface WordReelProps {
 }
 
 const SELECTED_FLEX_WEIGHT = 24;
-// peso por distância ao índice em foco: [distância 0, 1, 2]
+// Flex weight by distance from the settled focus index: [distance 0, 1, 2].
 const FOCUS_FLEX_WEIGHTS = [SELECTED_FLEX_WEIGHT, 10, 5];
 const BASE_FLEX_WEIGHT = 1;
 const FOCUS_TEXT_RADIUS = FOCUS_FLEX_WEIGHTS.length - 1;
+// Below this word count every bar has enough room to always show its
+// text (container min-height 288px / ~16px per row ≈ 18 rows).
+const MAX_ALWAYS_TEXT_WORDS = 18;
 
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
@@ -62,47 +65,61 @@ export default function WordReel({ words, spinToken, targetIndex, phase }: WordR
   }, [spinToken]);
 
   const segmentColors = getWheelSegmentColors(words.length, theme.wheel);
+  const alwaysShowText = words.length > 0 && words.length <= MAX_ALWAYS_TEXT_WORDS;
 
-  const focusIndex =
-    phase === "spinning"
-      ? highlightIndex
-      : phase === "revealing" || phase === "answering"
-        ? targetIndex
-        : null;
+  // The settled focus only drives layout (flex-grow). It's static once the
+  // wheel stops, so growing into place is a single transition rather than
+  // a per-tick reflow.
+  const settledFocusIndex =
+    phase === "revealing" || phase === "answering" ? targetIndex : null;
+  // The live sweep index only drives a background-color highlight while
+  // spinning — a cheap, compositor-only repaint with no layout thrash.
+  const sweepIndex = phase === "spinning" ? highlightIndex : null;
 
   return (
     <div className="flex h-72 w-56 flex-col gap-px sm:h-[26rem] sm:w-64">
       {words.map((word, i) => {
         const isSelected =
           (phase === "revealing" || phase === "answering") && i === targetIndex;
-        const distance =
-          focusIndex === null ? Infinity : Math.abs(i - focusIndex);
-        const showText = isSelected || distance <= FOCUS_TEXT_RADIUS;
+        const settledDistance =
+          settledFocusIndex === null ? Infinity : Math.abs(i - settledFocusIndex);
+        const isSweeping = sweepIndex !== null && i === sweepIndex;
+
+        const showText =
+          isSelected || alwaysShowText || settledDistance <= FOCUS_TEXT_RADIUS;
 
         const flexWeight = isSelected
           ? SELECTED_FLEX_WEIGHT
-          : distance <= FOCUS_TEXT_RADIUS
-            ? FOCUS_FLEX_WEIGHTS[distance]
+          : settledDistance <= FOCUS_TEXT_RADIUS
+            ? FOCUS_FLEX_WEIGHTS[settledDistance]
             : BASE_FLEX_WEIGHT;
 
         const fontSizeClass = isSelected
           ? "text-sm sm:text-base"
-          : distance === 0
+          : settledDistance === 0
             ? "text-xs sm:text-sm"
-            : distance === 1
+            : settledDistance === 1
               ? "text-[11px]"
-              : "text-[9px]";
+              : alwaysShowText
+                ? "text-[10px]"
+                : "text-[9px]";
 
         const background = isSelected
           ? theme.wrongSoft
-          : distance === 0
+          : isSweeping || settledDistance === 0
             ? theme.accent
             : segmentColors[i];
+
+        const textColor = isSelected
+          ? theme.highlight
+          : showText || isSweeping
+            ? theme.textOnAccent
+            : undefined;
 
         return (
           <div
             key={`${word}-${i}`}
-            className={`flex items-center justify-center overflow-hidden rounded-sm text-center transition-[flex-grow] duration-150 ${fontSizeClass} ${
+            className={`flex items-center justify-center overflow-hidden rounded-sm text-center transition-[flex-grow,background-color,color] duration-150 ${fontSizeClass} ${
               isSelected
                 ? "border-2 border-highlight px-2 py-1 font-[family-name:var(--font-hand)]"
                 : showText
@@ -114,7 +131,7 @@ export default function WordReel({ words, spinToken, targetIndex, phase }: WordR
               flexBasis: 0,
               minHeight: isSelected ? 32 : showText ? 10 : 1,
               background,
-              color: isSelected ? theme.highlight : showText ? theme.textOnAccent : undefined,
+              color: textColor,
             }}
           >
             {showText ? (

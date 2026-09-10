@@ -35,10 +35,10 @@ export default function SpellingInput({
       <span className="text-center font-[family-name:var(--font-hand)] text-2xl text-text-primary">
         {studentName ? (
           <>
-            <span className="text-accent">{studentName}</span>, sua palavra é:
+            <span className="text-accent">{studentName}</span>, your word is:
           </>
         ) : (
-          "Sua palavra é:"
+          "Your word is:"
         )}
       </span>
       <span className="min-h-10 font-[family-name:var(--font-hand)] text-3xl tracking-wide text-accent">

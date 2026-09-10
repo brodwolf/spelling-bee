@@ -1,5 +1,5 @@
-// 8º Ano — palavras de exemplo (dificuldade avançada).
-// TODO: expandir para ~100 palavras.
+// 8th Grade — example words (advanced difficulty).
+// TODO: expand to ~100 words.
 export const oitavoAnoWords: string[] = [
   "accommodate",
   "achievement",

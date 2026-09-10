@@ -1,7 +1,7 @@
 /**
- * Única fonte de verdade das cores do app.
- * Troque os valores abaixo para testar outras paletas — tudo (Tailwind,
- * CSS vars e componentes) lê a partir daqui via `src/app/layout.tsx`.
+ * Single source of truth for the app's colors.
+ * Change the values below to try other palettes — everything (Tailwind,
+ * CSS vars and components) reads from here via `src/app/layout.tsx`.
  */
 
 export const palette = {
@@ -13,27 +13,27 @@ export const palette = {
 } as const;
 
 export const theme = {
-  // superfícies
+  // surfaces
   background: palette.cream,
   surface: "#FFFFFF",
   surfaceMuted: "#EFE4D0",
 
-  // bordas e texto
+  // borders and text
   border: palette.cocoa,
   textPrimary: palette.cocoa,
   textMuted: "#8A7562",
   textOnAccent: palette.cream,
 
-  // acentos
+  // accents
   accent: palette.navy,
   accentSoft: palette.camel,
   highlight: palette.wineRed,
 
-  // roleta (paleta cíclica de segmentos)
+  // wheel (cyclical segment palette)
   wheel: [palette.wineRed, palette.navy, palette.camel, palette.cocoa],
 
-  // feedback (nota: evitamos o nome "right" pois colide com a utilitária
-  // Tailwind `text-right` de alinhamento de texto)
+  // feedback (note: we avoid the name "right" since it collides with the
+  // Tailwind `text-right` text-alignment utility)
   correct: "#2F6B3A",
   correctSoft: "#DDEEDF",
   wrong: palette.wineRed,

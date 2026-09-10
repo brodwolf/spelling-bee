@@ -107,7 +107,7 @@ export default function GameBoard({
             href="/"
             className="text-sm text-text-muted underline-offset-2 hover:underline"
           >
-            ← Trocar turma
+            ← Change grade
           </Link>
           <h1 className="font-[family-name:var(--font-hand)] text-4xl text-text-primary sm:text-5xl">
             Spelling Bee — {gradeLabel}
@@ -126,11 +126,11 @@ export default function GameBoard({
                 <span className="font-[family-name:var(--font-hand)] text-xl text-text-primary">
                   {selectedStudent ? (
                     <>
-                      Aluno da vez:{" "}
+                      Current student:{" "}
                       <span className="text-accent">{selectedStudent}</span>
                     </>
                   ) : (
-                    "Nenhum aluno selecionado"
+                    "No student selected"
                   )}
                 </span>
                 <button
@@ -142,7 +142,7 @@ export default function GameBoard({
                   disabled={phase !== "idle" || studentsPool.length === 0}
                   className="rounded-full border-2 border-accent px-5 py-1.5 font-[family-name:var(--font-hand)] text-base text-accent transition-transform hover:scale-105 disabled:opacity-40 disabled:hover:scale-100"
                 >
-                  {selectedStudent ? "Trocar aluno" : "Sortear aluno"}
+                  {selectedStudent ? "Change student" : "Pick student"}
                 </button>
               </div>
             )}
@@ -157,15 +157,15 @@ export default function GameBoard({
             {phase === "finished" ? (
               <div className="flex flex-col items-center gap-4 text-center">
                 <p className="font-[family-name:var(--font-hand)] text-3xl text-accent">
-                  Concluído! 🎉
+                  Done! 🎉
                 </p>
-                <p className="text-text-muted">Confira o ranking final ao lado.</p>
+                <p className="text-text-muted">Check the final ranking on the side.</p>
                 <button
                   type="button"
                   onClick={handleRestart}
                   className="rounded-xl border-2 border-accent bg-accent px-6 py-2 font-[family-name:var(--font-hand)] text-xl text-text-on-accent transition-transform hover:scale-105"
                 >
-                  Jogar novamente
+                  Play again
                 </button>
               </div>
             ) : (
@@ -177,12 +177,12 @@ export default function GameBoard({
                 }
                 className="rounded-full border-2 border-accent bg-accent px-8 py-3 font-[family-name:var(--font-hand)] text-2xl text-text-on-accent shadow-md transition-transform hover:scale-105 disabled:opacity-40 disabled:hover:scale-100"
               >
-                Girar
+                Spin
               </button>
             )}
 
             <SpellingInput
-              word={selectedWord}
+              word={phase === "answering" ? selectedWord : null}
               studentName={selectedStudent}
               typedAnswer={typedAnswer}
               onChangeTyped={setTypedAnswer}

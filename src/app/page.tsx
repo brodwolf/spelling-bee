@@ -10,7 +10,7 @@ export default function Home() {
           Spelling Bee
         </h1>
         <p className="max-w-md text-text-muted">
-          Escolha a turma para começar o concurso de soletrar.
+          Choose your grade to start the spelling contest.
         </p>
       </div>
 

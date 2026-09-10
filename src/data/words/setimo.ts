@@ -1,5 +1,5 @@
-// 7º Ano — palavras de exemplo (dificuldade intermediária).
-// TODO: expandir para ~100 palavras.
+// 7th Grade — example words (intermediate difficulty).
+// TODO: expand to ~100 words.
 export const setimoAnoWords: string[] = [
   "adventure",
   "beautiful",

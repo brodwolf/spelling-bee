@@ -1,5 +1,5 @@
-// 9º Ano — palavras de exemplo (dificuldade máxima).
-// TODO: expandir para ~100 palavras.
+// 9th Grade — example words (maximum difficulty).
+// TODO: expand to ~100 words.
 export const nonoAnoWords: string[] = [
   "bureaucracy",
   "conscientious",

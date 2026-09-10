@@ -1,5 +1,5 @@
-// 6º Ano — palavras de exemplo (dificuldade inicial).
-// TODO: expandir para ~100 palavras.
+// 6th Grade — example words (starter difficulty).
+// TODO: expand to ~100 words.
 export const sextoAnoWords: string[] = [
   "cat",
   "dog",

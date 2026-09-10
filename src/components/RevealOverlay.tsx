@@ -39,7 +39,7 @@ export default function RevealOverlay({
             transition={{ delay: 0.25, duration: 0.4 }}
             className="px-6 text-center font-[family-name:var(--font-hand)] text-3xl text-text-muted sm:text-4xl"
           >
-            {studentName ? `${studentName}, sua palavra é:` : "Sua palavra é:"}
+            {studentName ? `${studentName}, your word is:` : "Your word is:"}
           </motion.span>
 
           <motion.span

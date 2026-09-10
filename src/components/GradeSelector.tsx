@@ -14,7 +14,7 @@ export default function GradeSelector() {
             {grade.label}
           </span>
           <span className="mt-2 block text-sm text-text-muted">
-            {grade.words.length} palavras
+            {grade.words.length} words
           </span>
         </Link>
       ))}

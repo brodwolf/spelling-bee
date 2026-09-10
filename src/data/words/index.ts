@@ -12,10 +12,10 @@ export interface GradeInfo {
 }
 
 export const GRADES: GradeInfo[] = [
-  { key: "sexto", label: "Sexto Ano", words: sextoAnoWords },
-  { key: "setimo", label: "Sétimo Ano", words: setimoAnoWords },
-  { key: "oitavo", label: "Oitavo Ano", words: oitavoAnoWords },
-  { key: "nono", label: "Nono Ano", words: nonoAnoWords },
+  { key: "sexto", label: "6th Grade", words: sextoAnoWords },
+  { key: "setimo", label: "7th Grade", words: setimoAnoWords },
+  { key: "oitavo", label: "8th Grade", words: oitavoAnoWords },
+  { key: "nono", label: "9th Grade", words: nonoAnoWords },
 ];
 
 export function getGrade(key: string): GradeInfo | undefined {

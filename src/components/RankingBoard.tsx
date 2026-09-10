@@ -16,7 +16,7 @@ export default function RankingBoard({ ranking }: RankingBoardProps) {
 
       {ranking.length === 0 ? (
         <p className="text-center text-sm text-text-muted">
-          Ninguém pontuou ainda
+          No one has scored yet
         </p>
       ) : (
         <ol className="flex w-full flex-col gap-2">

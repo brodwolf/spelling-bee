@@ -1,11 +1,11 @@
 /**
- * Atribui uma cor por segmento ciclando `colors`. Ciclar já garante que
- * dois itens consecutivos numa sequência linear nunca repitam cor (desde
- * que `colors.length >= 2`). A única falha possível é no "encontro" de
- * uma sequência circular (ex. roleta): quando `count % colors.length === 1`
- * a última cor calculada coincide com a primeira. Esse caso é corrigido
- * trocando a última cor por outra que difira tanto da penúltima quanto
- * da primeira.
+ * Assigns a color per segment by cycling through `colors`. Cycling already
+ * guarantees that two consecutive items in a linear sequence never repeat
+ * a color (as long as `colors.length >= 2`). The only failure case is the
+ * "wraparound" of a circular sequence (e.g. the wheel): when
+ * `count % colors.length === 1` the last computed color matches the first.
+ * That case is fixed by swapping the last color for one that differs from
+ * both the second-to-last and the first.
  */
 export function getWheelSegmentColors(
   count: number,
