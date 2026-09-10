@@ -2,6 +2,7 @@
 
 interface SpellingInputProps {
   word: string | null;
+  studentName: string | null;
   typedAnswer: string;
   onChangeTyped: (value: string) => void;
   onGrade: (isRight: boolean) => void;
@@ -10,6 +11,7 @@ interface SpellingInputProps {
 
 export default function SpellingInput({
   word,
+  studentName,
   typedAnswer,
   onChangeTyped,
   onGrade,
@@ -30,8 +32,14 @@ export default function SpellingInput({
 
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-3">
-      <span className="font-[family-name:var(--font-hand)] text-2xl text-text-primary">
-        Your Word is...
+      <span className="text-center font-[family-name:var(--font-hand)] text-2xl text-text-primary">
+        {studentName ? (
+          <>
+            <span className="text-accent">{studentName}</span>, sua palavra é:
+          </>
+        ) : (
+          "Sua palavra é:"
+        )}
       </span>
       <span className="min-h-10 font-[family-name:var(--font-hand)] text-3xl tracking-wide text-accent">
         {word

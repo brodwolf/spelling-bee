@@ -6,9 +6,14 @@ import BeeMascot from "./BeeMascot";
 interface RevealOverlayProps {
   visible: boolean;
   word: string | null;
+  studentName: string | null;
 }
 
-export default function RevealOverlay({ visible, word }: RevealOverlayProps) {
+export default function RevealOverlay({
+  visible,
+  word,
+  studentName,
+}: RevealOverlayProps) {
   return (
     <AnimatePresence>
       {visible && word && (
@@ -32,9 +37,9 @@ export default function RevealOverlay({ visible, word }: RevealOverlayProps) {
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.25, duration: 0.4 }}
-            className="font-[family-name:var(--font-hand)] text-3xl text-text-muted sm:text-4xl"
+            className="px-6 text-center font-[family-name:var(--font-hand)] text-3xl text-text-muted sm:text-4xl"
           >
-            Your Word is...
+            {studentName ? `${studentName}, sua palavra é:` : "Sua palavra é:"}
           </motion.span>
 
           <motion.span

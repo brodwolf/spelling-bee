@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { GRADES, getGrade } from "@/data/words";
+import { getStudents } from "@/data/students";
 import GameBoard from "@/components/GameBoard";
 
 export function generateStaticParams() {
@@ -18,5 +19,11 @@ export default async function PlayPage({
     notFound();
   }
 
-  return <GameBoard gradeLabel={grade.label} initialWords={grade.words} />;
+  return (
+    <GameBoard
+      gradeLabel={grade.label}
+      initialWords={grade.words}
+      initialStudents={getStudents(gradeKey)}
+    />
+  );
 }
